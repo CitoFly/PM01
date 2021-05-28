@@ -1,3 +1,5 @@
+//код программы Text-to-Speech
+
 str sayBefore = "Local tume.";
 str textHours = "Hours";
 str textMinutes = "Minutes";
@@ -14,13 +16,13 @@ when listPhrase.BeforePicking do {
   listPhrase.Elements = Phrases;
 }
 
-Prases.makealist = "Время обедать!", "Время вставать!", "Время спать!";
+str Prases.makealist = "Время обедать!", "Время вставать!", "Время спать!";
 
 when listPhrase.AfterPicking do {
   listPhrase.Elements = listPhrases.Selection;
 }
 
-When btnSetDefault.Click do {
+when btnSetDefault.Click do {
   textSayBefore.Text = sayBefore;
   textHoursWord.Text = textHours;
   textMinutesWord.Text = textMinutes;
@@ -64,9 +66,9 @@ when Screen1.initialize do {
 }
 
 when Clock1.Timer do {
-  hours.Text = Clock1.Hour instant call Clock1.now;
-  minutes.Text = Clock1.Minute instant call Clock1.now;
-  seconds.Text = Clock1.Second instant call Clock1.now;
+  hours.Text = Clock1.Hour(call Clock1.now);
+  minutes.Text = Clock1.Minute(call Clock1.now);
+  seconds.Text = Clock1.Second(call Clock1.now);
 }
 
 when btnSayNow.Click do {
@@ -115,26 +117,26 @@ str SayHours = "";
 str SayMinutes = "";
 str SaySeconds = "";
 
-procedure sayTime() {
+procedure sayTime() do {
   if (chbHours.Checked) then 
     SayHours = hours.Text + textHoursWord.Text;
   else
-    Sayminutes = "";
+    SayHours = "";
     
     if (chbMinutes.Checked) then 
-    SayHours = minutes.Text + textMinutesWord.Text;
+    SayMinutes += minutes.Text + textMinutesWord.Text;
   else
-    SayMinutes = "";
+    SayMinutes += "";
     
     if (chbSeconds.Checked) then 
-    SaySeconds = seconds.Text + textSecondsWord.Text;
+    SaySeconds += seconds.Text + textSecondsWord.Text;
   else
-    SaySeconds = "";
+    SaySeconds += "";
     
-    SayMessage = textSayBefore.Text + SayHours + SayMinutes + SaySeconds;
-    if (textTimeHours.Text = call Clock1.Hour instant call Clock1.Now then
+    SayMessage += textSayBefore.Text + SayHours + SayMinutes + SaySeconds;
+    if (textTimeHours.Text = Clock1.Hour(call Clock1.Now) then
       SayMessage += listPhrase.Text;
     SayMessage += textSayAfter.Text;
     
-    call TextToSpeech1.Speak message SayMessage;
+    call TextToSpeech1.Speak(SayMessage);
 }

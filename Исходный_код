@@ -1,4 +1,4 @@
-//код программы Text-to-Speech
+//Исходный код программы Say Time
 
 str sayBefore = "Local tume.";
 str textHours = "Hours";
